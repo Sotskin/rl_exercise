@@ -20,7 +20,7 @@ def evaluate(agent, env, min_reward, n_samples):
         rewards[i] = total_reward
 
     print('Agent passed {} percent. Low score {}, median score {}'.format(
-        np.sum(rewards >= min_reward) / n_samples, np.min(rewards), 
+        np.sum(rewards >= min_reward) / n_samples * 100., np.min(rewards),
         np.median(rewards)))
 
 
@@ -28,7 +28,7 @@ def main(args):
     env = gym.make('CartPole-v0')
     agent = Agent(env)
 
-    agent.learn(max_episodes=3000)
+    agent.learn(max_episodes=1000)
     evaluate(agent, env, args.reward_for_solved, args.solved_samples)
 
 
