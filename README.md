@@ -56,5 +56,5 @@ is a good way to get additional resources on topics you are not familiar with.
 - [Double Q-Learning](https://arxiv.org/abs/1509.06461)
 - [Dueling Networks](https://arxiv.org/abs/1511.06581)
 - [Prioritized Replay](https://arxiv.org/abs/1511.05952)
-- [Asynchronous Advantage Actor-Critic (A3C)][https://arxiv.org/abs/1602.01783] (this is a policy gradient method)
+- [Asynchronous Advantage Actor-Critic (A3C)](https://arxiv.org/abs/1602.01783) (this is a policy gradient method)
 - [Proximal Policy Optimization (PPO)](https://arxiv.org/abs/1707.06347) (also a policy gradient method)
