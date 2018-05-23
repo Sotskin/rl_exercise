@@ -10,6 +10,9 @@ course is the book [Reinforcement Learning: An Introduction](http://incompleteid
 Additionally, as the exercise here will deal deep learning, another resource that may be useful
 is the [Deep RL course](http://rll.berkeley.edu/deeprlcourse/) at Berkely.
 
+There may be a lot of new information for you here. Don't get discouraged, this is supposed
+to be a learning experience as well and it won't come instantly.
+
 # Description
 The problem you will be solving is to get a cart to balance a pole, without it
 tipping over. See [this link](https://gym.openai.com/envs/CartPole-v0/) for
