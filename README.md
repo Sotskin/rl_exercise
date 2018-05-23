@@ -15,7 +15,7 @@ The problem you will be solving is to get a cart to balance a pole, without it
 tipping over. See [this link](https://gym.openai.com/envs/CartPole-v0/) for
 a depiction of the problem, and information on the environment you will be using.
 
-The algorithm we wish you to use to solve this problem is [Deep Q-Learning](http://www.davidqiu.com:8888/research/nature14236.pdf)(note,
+The algorithm we wish you to use to solve this problem is [Deep Q-Learning](http://www.davidqiu.com:8888/research/nature14236.pdf) (note,
 you will find additional resources below). You will be solving this problem using an [OpenAI Gym](https://gym.openai.com/) environment,
 which is already setup.
 
@@ -24,3 +24,7 @@ need is [MXNet](https://mxnet.incubator.apache.org/). This framework makes writi
 more simple, especially using the new high-level subpackage called [Gluon](https://mxnet.incubator.apache.org/gluon/index.html).
 
 You can find a list of the only dependencies you will need to install for Python in the file named "dependencies" above.
+
+### In summary
+- Implement an RL agent in the file `agent.py`, which learns via Deep Q-Learning
+- Test your implementation using `main.py` and you should, at least, reach 100% accuracy within 100 episodes
