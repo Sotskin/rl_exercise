@@ -43,12 +43,13 @@ Here is an accumulation of the resources listed above, as well as some additiona
 - [Deep RL course](http://rll.berkeley.edu/deeprlcourse/)
 - [OpenAI Gym](https://gym.openai.com/)
 - [CartPole Gym Environment](https://gym.openai.com/envs/CartPole-v0/)
+- [MXNet (and Gluon)](https://mxnet.incubator.apache.org/)
 - [Deep Q-Learning Nature](http://www.davidqiu.com:8888/research/nature14236.pdf)
 - [Deep Q-Learning for Atari](https://arxiv.org/abs/1312.5602) (trying an Atari game if you solve CartPole would be an idea)
 
 ### Optional
 If you successfully implemented the Deep Q-Learning agent, and solved the CartPole environment, consider some
-of the following resources. If you have time you may wish to extend on this exercise by implementing one of the methods below, and
+of the following resources. If you have time you may wish to extend on this exercise by implementing one of the extensions/methods below, and
 trying it on another environment as well (feel free to turn that code in too!). Looking at the work cited in the papers below
 is a good way to get additional resources on topics you are not familiar with.
 
