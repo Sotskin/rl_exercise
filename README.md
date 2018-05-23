@@ -9,7 +9,7 @@ taught by David Silver (a name you will likely see in other RL materials). Accom
 course is the book [Reinforcement Learning: An Introduction](http://incompleteideas.net/book/the-book-2nd.html).
 Additionally, as the exercise here will deal deep learning, another resource that may be useful
 is the [Deep RL course](http://rll.berkeley.edu/deeprlcourse/) at Berkely.
-[Convolutional Neural Networks for Visual Recognition](Convolutional Neural Networks for Visual Recognition) 
+[Convolutional Neural Networks for Visual Recognition](http://cs231n.stanford.edu/)
 from Stanford is a good introduction to deep learning.
 
 ### Important note
@@ -45,7 +45,7 @@ implementation, you may need to spend some time finding the correct hyperparamet
 Here is an accumulation of the resources listed above, as well as some additional.
 
 ### Main resources
-- [Convolutional Neural Networks for Visual Recognition](Convolutional Neural Networks for Visual Recognition)
+- [Convolutional Neural Networks for Visual Recognition](http://cs231n.stanford.edu/)
 - [Introduction to RL course](http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html)
 - [Introduction to RL book](http://incompleteideas.net/book/the-book-2nd.html)
 - [Deep RL course](http://rll.berkeley.edu/deeprlcourse/)
