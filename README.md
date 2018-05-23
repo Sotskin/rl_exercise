@@ -1,5 +1,5 @@
 # Exercise on Reinforcement Learning
-In this exercise you will be implementing a [reinforcement learning](https://en.wikipedia.org/wiki/Reinforcement_learning)
+In this exercise you will be using [reinforcement learning](https://en.wikipedia.org/wiki/Reinforcement_learning)
 to solve the [CartPole](https://gym.openai.com/envs/CartPole-v0/) problem.
 This exercise will test you on how quickly you can pick up new concepts through self-study.
 
@@ -12,7 +12,7 @@ is the [Deep RL course](http://rll.berkeley.edu/deeprlcourse/) at Berkely.
 
 ### Important note
 There may be a lot of new information for you here. Don't get discouraged, this is supposed
-to be a learning experience as well and it won't come instantly.
+to be a learning experience as well; it may not come instantly.
 
 # Description
 The problem you will be solving is to get a cart to balance a pole, without it
@@ -33,7 +33,8 @@ You can find a list of the only dependencies you will need to install for Python
 - Implement an RL agent in the file `agent.py`, which learns via Deep Q-Learning
 - This agent should implement the methods already defined in it
 - Be sure to have sufficient print statements to show the agent's learning progress
-- Test your implementation using `main.py` and you should aim to reach 100% success within 1000 episodes
+- Test your implementation using `main.py` and you should aim to reach 100% success within 1000 episodes (keep in mind, even with a correct
+implementation, you may need to spend some time finding the correct hyperparameters, such as learning rate, network size, epsilon-greedy ratio)
 - Send an email with a GitHub invitation, or link, to your cloned repo to both Chien-Chin and Conrad
 - (Optional) If you finish this, see additional resources below to try to improve your agent and/or use it in harder environments
 
