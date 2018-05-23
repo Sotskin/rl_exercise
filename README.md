@@ -35,8 +35,9 @@ You can find a list of the only dependencies you will need to install for Python
 - Implement an RL agent in the file `agent.py`, which learns via Deep Q-Learning
 - This agent should implement the methods already defined in it
 - Be sure to have sufficient print statements to show the agent's learning progress
-- Test your implementation using `main.py` and you should aim to reach 100% success within 1000 episodes (keep in mind, even with a correct
-implementation, you may need to spend some time finding the correct hyperparameters, such as learning rate, network size, epsilon-greedy ratio)
+- Test your implementation using `main.py` and you should aim to maximize your 'pass' percentage that is output, with at most
+1000 episodes run. Keep in mind that the results may vary wildly from one run to another.
+Also, even with a correct implementation, you may need to spend some time finding the correct hyperparameters, such as learning rate, network size, epsilon-greedy ratio
 - Add a one page write-up to your GitHub repo explaining the progress you made, what you learned, and how you learned
 - Send an email with a GitHub invitation, or link, to your cloned repo to both Chien-Chin and Conrad
 - (Optional) If you finish this, see additional resources below to try to improve your agent and/or use it in harder environments
