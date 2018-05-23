@@ -27,4 +27,33 @@ You can find a list of the only dependencies you will need to install for Python
 
 ### In summary
 - Implement an RL agent in the file `agent.py`, which learns via Deep Q-Learning
-- Test your implementation using `main.py` and you should, at least, reach 100% accuracy within 100 episodes
+- This agent should implement the methods already defined in it
+- Be sure to have sufficient print statements to show learning progress
+- Test your implementation using `main.py` and you should, at least, reach 100% accuracy within 1000 episodes
+- (Optional) If you finish this, see additional resources below to try to improve your agent and/or use it in harder environments
+
+
+# Resources
+Here is an accumulation of the resources listed above, as well as some additional.
+
+### Main resources
+- [Introduction to RL course](http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html)
+- [Introduction to RL book](http://incompleteideas.net/book/the-book-2nd.html)
+- [Deep RL course](http://rll.berkeley.edu/deeprlcourse/)
+- [OpenAI Gym](https://gym.openai.com/)
+- [CartPole Gym Environment](https://gym.openai.com/envs/CartPole-v0/)
+- [Deep Q-Learning Nature](http://www.davidqiu.com:8888/research/nature14236.pdf)
+- [Deep Q-Learning for Atari](https://arxiv.org/abs/1312.5602) (trying an Atari game if you solve CartPole would be an idea)
+
+### Optional
+If you successfully implemented the Deep Q-Learning agent, and solved the CartPole environment, consider some
+of the following resources. If you have time you may wish to extend on this exercise by implementing one of the methods below, and
+trying it on another environment as well (feel free to turn that code in too!). Looking at the work cited in the papers below
+is a good way to get additional resources on topics you are not familiar with.
+
+### Additional Resources (extensions to Deep Q-Learning and other algorithms)
+- [Double Q-Learning](https://arxiv.org/abs/1509.06461)
+- [Dueling Networks](https://arxiv.org/abs/1511.06581)
+- [Prioritized Replay](https://arxiv.org/abs/1511.05952)
+- [Asynchronous Advantage Actor-Critic (A3C)][https://arxiv.org/abs/1602.01783] (this is a policy gradient method)
+- [Proximal Policy Optimization (PPO)](https://arxiv.org/abs/1707.06347) (also a policy gradient method)
