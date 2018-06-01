@@ -66,6 +66,7 @@ def main(args):
 
     if args.visualize:
         evaluate(agent, env, np.inf, 10, viz=True)
+    env.close()
 
 
 if __name__ == '__main__':
