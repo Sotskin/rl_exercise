@@ -7,33 +7,40 @@ from mxnet.gluon import nn
 class Agent(object): # DQN, Solved with around 150 episodes
     def __init__(self, env):
         self._env = env
-        self.q = {} # {s:{a:v}}
         self.gamma = 0.9 # discount factor
-        self.epsilon = 0.9
-        self.epsilon_decay = 0.002
-        self.epsilon_min = 0.1
-        self.batch_size = 32
+        self.epsilon = 1.
+        self.epsilon_decay = 0.995
+        self.epsilon_min = 0.01
+        self.batch_size = 64
+        self.update_c = 2000 # steps to update target model
         self.max_steps = 1000
         
         self.memory = deque() # s, a, r, s', done
-        self.memory_limit = 15000
-        self.model = self.create_model()
-        self.trainer = gluon.Trainer(self.model.collect_params(),
-                'sgd', {'learning_rate':0.01})
+        self.memory_limit = 20000
+        self.param_file_name = "net.params"
+        self.train_model = self.create_model()
+        self.target_model = self.create_model(True)
+        self.trainer = gluon.Trainer(self.train_model.collect_params(),
+                'sgd', {'learning_rate':0.005})
+                #'nag', {'learning_rate':0.01})
                 #'adadelta', {'learning_rate':0.001}) all adaptive methods give bad result
         self.loss = gluon.loss.L2Loss()
 
         self.train_loss = 0.
 
-    def create_model(self):
+    def create_model(self, target = False):
         net = nn.Sequential()
         with net.name_scope():
             net.add(
-                    nn.Dense(32, activation="relu"),
-                    nn.Dense(16, activation="relu"),
-                    nn.Dense(self._env.action_space.n)
+                    nn.Dense(32, activation="relu", in_units = 4),
+                    nn.Dense(16, activation="relu", in_units = 32),
+                    nn.Dense(self._env.action_space.n, in_units = 16)
                     )
-        net.initialize(init=init.Xavier())
+        if target:
+            self.train_model.save_params(self.param_file_name)
+            net.load_params(self.param_file_name)
+        else:
+            net.initialize(init=init.Xavier())
         return net
             
     def obs_to_state(self, observation):
@@ -46,7 +53,7 @@ class Agent(object): # DQN, Solved with around 150 episodes
         if np.random.random_sample(None) < self.epsilon:
             return self._env.action_space.sample()
         state = self.obs_to_state(observation)
-        return int(nd.argmax(self.model(state), 1).asscalar())
+        return int(nd.argmax(self.train_model(state), 1).asscalar())
     
     def replay(self):
         # experience replay
@@ -58,7 +65,7 @@ class Agent(object): # DQN, Solved with around 150 episodes
         reward_batch = nd.array([b[2] for b in batch])
         next_state_batch = nd.array([b[3] for b in batch])
         target_batch = reward_batch + self.gamma * \
-                np.max(self.model(next_state_batch),1)
+                np.max(self.target_model(next_state_batch),1)
 
         for i in range(self.batch_size): # s, a, r, _s, d
             if batch[i][4]:
@@ -66,7 +73,7 @@ class Agent(object): # DQN, Solved with around 150 episodes
                 #target_batch[i] = target_batch[i] + self.gamma * \
                 #        np.max(self.model(nd.reshape(next_state_batch[i],[1,4])),1)
         with autograd.record():
-            q_target_batch = self.model(state_batch)
+            q_target_batch = self.train_model(state_batch)
             #print(q_target_batch.shape,"\n", target_batch.shape)
             output_batch = nd.pick(q_target_batch, action_batch, 1)
             loss = self.loss(output_batch,target_batch)
@@ -76,7 +83,8 @@ class Agent(object): # DQN, Solved with around 150 episodes
         return
 
     def learn(self, max_episodes=1000):
-        verb_s = 10
+        verb_s = 1
+        c = 0
         for i in range(max_episodes):
             self.train_loss = 0.
             obser = self._env.reset()
@@ -89,13 +97,23 @@ class Agent(object): # DQN, Solved with around 150 episodes
                     self.memory.popleft()
                 obser = next_obser
                 self.replay()
+                if c % self.update_c == 0:
+                    print("update target function at episode {}".format(i))
+                    self.train_model.save_params(self.param_file_name)
+                    self.target_model.load_params(self.param_file_name)
+                c += 1
+
                 if done:
                     if self.epsilon > self.epsilon_min:
-                        self.epsilon -= self.epsilon_decay
+                        self.epsilon *= self.epsilon_decay
                     if i % verb_s == 0:
                         print("Episode {} over, loss = {:.3f}, epi = {:.3f}, steps = {}"
-                            .format(i, self.train_loss, self.epsilon, t))
+                            .format(i+1, self.train_loss, self.epsilon, t))
                     break;
+        # update again at the end
+        print("update target function at the end of last episode")
+        self.train_model.save_params(self.param_file_name)
+        self.target_model.load_params(self.param_file_name)
 
     def query(self, observation):
-        return int(nd.argmax(self.model(self.obs_to_state(observation)), 1).asscalar())
+        return int(nd.argmax(self.target_model(self.obs_to_state(observation)), 1).asscalar())
