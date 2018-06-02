@@ -20,6 +20,7 @@ class Agent(object): # DQN, Solved with around 150 episodes
         self.model = self.create_model()
         self.trainer = gluon.Trainer(self.model.collect_params(),
                 'sgd', {'learning_rate':0.01})
+                #'adadelta', {'learning_rate':0.001}) all adaptive methods give bad result
         self.loss = gluon.loss.L2Loss()
 
         self.train_loss = 0.
@@ -58,6 +59,7 @@ class Agent(object): # DQN, Solved with around 150 episodes
         next_state_batch = nd.array([b[3] for b in batch])
         target_batch = reward_batch + self.gamma * \
                 np.max(self.model(next_state_batch),1)
+
         for i in range(self.batch_size): # s, a, r, _s, d
             if batch[i][4]:
                 target_batch[i] = reward_batch[i]
@@ -74,6 +76,7 @@ class Agent(object): # DQN, Solved with around 150 episodes
         return
 
     def learn(self, max_episodes=1000):
+        verb_s = 10
         for i in range(max_episodes):
             self.train_loss = 0.
             obser = self._env.reset()
@@ -87,10 +90,10 @@ class Agent(object): # DQN, Solved with around 150 episodes
                 obser = next_obser
                 self.replay()
                 if done:
-                    self.epsilon -= self.epsilon_decay
-                    if self.epsilon < self.epsilon_min:
-                        self.epsilon = self.epsilon_min
-                    print("Episode {} over, loss = {:.3f}, epi = {:.3f}, steps = {}"
+                    if self.epsilon > self.epsilon_min:
+                        self.epsilon -= self.epsilon_decay
+                    if i % verb_s == 0:
+                        print("Episode {} over, loss = {:.3f}, epi = {:.3f}, steps = {}"
                             .format(i, self.train_loss, self.epsilon, t))
                     break;
 
