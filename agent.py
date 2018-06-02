@@ -4,7 +4,7 @@ from collections import deque
 from mxnet import nd, gluon, init, autograd
 from mxnet.gluon import nn
 
-class Agent(object): # DQN, Solved with around 150 episodes
+class Agent(object): # DQN (experience replay and delayed update)
     def __init__(self, env):
         self._env = env
         self.gamma = 0.9 # discount factor
