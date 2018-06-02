@@ -51,14 +51,6 @@ class Agent(object): # DQN, Solved with around 400 episodes
         state = self.obs_to_state(observation)
         return self.q.get(state, {}).get(action, 0)
     
-    def update_q(self, observation, action, value):
-        state = self.obs_to_state(observation)
-        if state not in self.q:
-            self.q[state] = {}
-        if action not in self.q[state]:
-            self.q[state][action] = 0
-        self.q[state][action] = self.q[state][action] + value
-    
     def replay(self):
         # experience replay
         if len(self.memory) < self.batch_size:
