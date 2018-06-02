@@ -12,7 +12,7 @@ class Agent(object): # DQN (experience replay and delayed update)
         self.epsilon_decay = 0.995
         self.epsilon_min = 0.01
         self.batch_size = 64
-        self.update_c = 2000 # steps to update target model
+        self.update_c = 1000 # steps to update target model
         self.max_steps = 1000
         
         self.memory = deque() # s, a, r, s', done
@@ -21,9 +21,9 @@ class Agent(object): # DQN (experience replay and delayed update)
         self.train_model = self.create_model()
         self.target_model = self.create_model(True)
         self.trainer = gluon.Trainer(self.train_model.collect_params(),
-                'sgd', {'learning_rate':0.005})
-                #'nag', {'learning_rate':0.01})
-                #'adadelta', {'learning_rate':0.001}) all adaptive methods give bad result
+                'sgd', {'learning_rate':0.01})
+                #'nag', {'learning_rate':0.005})
+                #'adam', {'learning_rate':0.001}) # all adaptive methods give bad result
         self.loss = gluon.loss.L2Loss()
 
         self.train_loss = 0.
@@ -85,6 +85,8 @@ class Agent(object): # DQN (experience replay and delayed update)
     def learn(self, max_episodes=1000):
         verb_s = 1
         c = 0
+        stop_count = 0
+        stop_limit = 20
         for i in range(max_episodes):
             self.train_loss = 0.
             obser = self._env.reset()
@@ -104,12 +106,17 @@ class Agent(object): # DQN (experience replay and delayed update)
                 c += 1
 
                 if done:
+                    stop_count = stop_count + 1 if t == 199 else 0
                     if self.epsilon > self.epsilon_min:
                         self.epsilon *= self.epsilon_decay
                     if i % verb_s == 0:
                         print("Episode {} over, loss = {:.3f}, epi = {:.3f}, steps = {}"
                             .format(i+1, self.train_loss, self.epsilon, t))
-                    break;
+                    break
+            if stop_count == stop_limit:
+                print("{} consecutive max reward, train over".format(stop_limit))
+                break
+
         # update again at the end
         print("update target function at the end of last episode")
         self.train_model.save_params(self.param_file_name)
