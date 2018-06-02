@@ -4,7 +4,7 @@ from collections import deque
 from mxnet import nd, gluon, init, autograd
 from mxnet.gluon import nn
 
-class Agent(object): # DQN, Solved with around 400 episodes
+class Agent(object): # DQN, Solved with around 150 episodes
     def __init__(self, env):
         self._env = env
         self.q = {} # {s:{a:v}}
@@ -46,10 +46,6 @@ class Agent(object): # DQN, Solved with around 400 episodes
             return self._env.action_space.sample()
         state = self.obs_to_state(observation)
         return int(nd.argmax(self.model(state), 1).asnumpy().item(0)) # orz
-
-    def get_q(self, observation, action):
-        state = self.obs_to_state(observation)
-        return self.q.get(state, {}).get(action, 0)
     
     def replay(self):
         # experience replay
