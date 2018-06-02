@@ -45,7 +45,7 @@ class Agent(object): # DQN, Solved with around 150 episodes
         if np.random.random_sample(None) < self.epsilon:
             return self._env.action_space.sample()
         state = self.obs_to_state(observation)
-        return int(nd.argmax(self.model(state), 1).asnumpy().item(0)) # orz
+        return int(nd.argmax(self.model(state), 1).asscalar())
     
     def replay(self):
         # experience replay
@@ -54,12 +54,15 @@ class Agent(object): # DQN, Solved with around 150 episodes
         batch = random.sample(self.memory, self.batch_size)
         state_batch = nd.array([b[0] for b in batch]) 
         action_batch = nd.array([b[1] for b in batch])
-        target_batch = nd.array([b[2] for b in batch])
+        reward_batch = nd.array([b[2] for b in batch])
         next_state_batch = nd.array([b[3] for b in batch])
+        target_batch = reward_batch + self.gamma * \
+                np.max(self.model(next_state_batch),1)
         for i in range(self.batch_size): # s, a, r, _s, d
-            if not batch[i][4]:
-                target_batch[i] = target_batch[i] + self.gamma * \
-                        np.max(self.model(nd.reshape(next_state_batch[i],[1,4])),1)
+            if batch[i][4]:
+                target_batch[i] = reward_batch[i]
+                #target_batch[i] = target_batch[i] + self.gamma * \
+                #        np.max(self.model(nd.reshape(next_state_batch[i],[1,4])),1)
         with autograd.record():
             q_target_batch = self.model(state_batch)
             #print(q_target_batch.shape,"\n", target_batch.shape)
@@ -92,4 +95,4 @@ class Agent(object): # DQN, Solved with around 150 episodes
                     break;
 
     def query(self, observation):
-        return int(nd.argmax(self.model(self.obs_to_state(observation)), 1).asnumpy().item(0))
+        return int(nd.argmax(self.model(self.obs_to_state(observation)), 1).asscalar())
