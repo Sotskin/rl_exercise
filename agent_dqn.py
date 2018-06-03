@@ -4,7 +4,7 @@ from collections import deque
 from mxnet import nd, gluon, init, autograd
 from mxnet.gluon import nn
 
-class Agent(object): # Double DQN (decoupled evaluation)
+class Agent(object): # DQN (experience replay and delayed update)
     def __init__(self, env):
         self._env = env
         self.gamma = 0.9 # discount factor
@@ -64,13 +64,9 @@ class Agent(object): # Double DQN (decoupled evaluation)
         action_batch = nd.array([b[1] for b in batch])
         reward_batch = nd.array([b[2] for b in batch])
         next_state_batch = nd.array([b[3] for b in batch])
-        # Double-DQN:
-        # Calculate target value by choosing action with online network, 
-        # and getting value from target network
-        target_action_batch = np.argmax(self.train_model(next_state_batch), 1)
         target_batch = reward_batch + self.gamma * \
-                nd.pick(self.target_model(next_state_batch), target_action_batch, 1)
-                #np.max(self.target_model(next_state_batch),1)
+                np.max(self.target_model(next_state_batch),1)
+
         for i in range(self.batch_size): # s, a, r, _s, d
             if batch[i][4]:
                 target_batch[i] = reward_batch[i]
